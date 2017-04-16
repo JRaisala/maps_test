@@ -1,57 +1,74 @@
-'use strict';
+//'use strict';
 
 const Hapi = require('hapi');
 const Good = require('good');
 
+var todolist = [
+    {
+        "task":"Walk the cat",
+        "owner":"Kristen"
+    },
+    {
+        "task":"Water the plants",
+        "owner":"Kristen"
+    }
+]
+
 const server = new Hapi.Server();
 server.connection({ port: 3000, host: 'localhost' });
 
-server.route({
+server.route([
+    {
     method: 'GET',
     path: '/',
     handler: function (request, reply) {
         reply('Hello, world!');
-    }
-});
-
-server.route({
+         }
+    },
+    {
     method: 'GET',
-    path: '/{name}',
+    path: '/api/v1/todolist',
     handler: function (request, reply) {
-        reply('Hello, ' + encodeURIComponent(request.params.name) + '!');
-    }
-});
+        reply(todolist);
+         }
+    },
+    {
+    method: 'POST',
+    path: '/api/v1/todolist',
+    handler: function(request, reply) {
+        var newTask = {"task":request.payload.task, "owner":request.payload.owner};
+        todolist.push(newTask);
+        reply(todolist).code(201);
+         }
+    },
+    {
+    method: 'GET',
+    path: '/api/v1/todolist/{index}',
+    handler: function (request, reply) {
+        reply(todolist[request.params.index-1]);
+         }
+    },
+    {
+    method: 'PUT',
+    path: '/api/v1/todolist/{index}',
+    handler: function(request, reply) {
+        var newTask = {"task":request.payload.task, "owner":request.payload.owner};
+        todolist[request.params.index-1] = newTask;
+        reply(todolist[request.params.index-1]);
+         }
+    },
+    {
+    method: 'DELETE',
+    path: '/api/v1/todolist/{index}',
+    handler: function(request, reply) {
+        delete todolist[request.params.index-1];
+        reply().code(204);
+         }
+    },
+]);
 
-
-server.register({
-    register: Good,
-    options: {
-        reporters: {
-            console: [{
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [{
-                    response: '*',
-                    log: '*'
-                }]
-            }, {
-                module: 'good-console'
-            }, 'stdout']
-        }
-    }
-}, (err) => {
-
-    if (err) {
-        throw err; // something bad happened loading the plugin
-    }
-
-    server.start((err) => {
-
-        if (err) {
-            throw err;
-        }
-        server.log('info', 'Server running at: ' + server.info.uri);
-    });
+server.start(function(err) {
+    console.log('running at 3000')
 });
 
 
