@@ -1,0 +1,26 @@
+{
+  "name": "ferry_tracking",
+  "version": "1.0.0",
+  "description": "Speys ferry tracking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JRaisala/maps_test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JRaisala/maps_test/issues"
+  },
+  "homepage": "https://github.com/JRaisala/maps_test#readme",
+  "dependencies": {
+    "good": "^7.1.0",
+    "good-console": "^6.4.0",
+    "good-squeeze": "^5.0.2",
+    "hapi": "^16.1.1",
+    "inert": "^4.2.0"
+  }
+}

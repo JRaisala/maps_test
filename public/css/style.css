@@ -1,0 +1,19 @@
+body {
+    margin-top: 60px;
+}
+
+.footer {
+    font-size: 65%;
+}
+
+#canvas {
+    display:none;
+}
+
+#video {
+    border: 1px solid black;
+    box-shadow: 2px 2px 3px black;
+    width:320px;
+    height:240px;
+
+}
